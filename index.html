@@ -355,7 +355,7 @@ async function hashPin(name, pin){
 }
 const unlocked = n => !pins[n] || ls('cria:pin:' + n) === pins[n];
 function askPin(n, then){
-  modal(`<h3>Senha da ${esc(n)}</h3><p>Digite a senha de 4 números que você criou.</p>
+  modal(`${avatar(n, 84)}<h3>Senha da ${esc(n)}</h3><p>Digite a senha de 4 números que você criou.</p>
     <input id="pinIn" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="current-password" style="letter-spacing:.4em;font-size:24px;text-align:center;margin-top:12px">
     <div class="warn" id="wpin"></div>
     <button class="btn" id="pinOk">Entrar</button>
@@ -405,6 +405,8 @@ function renderHome(){
 $('#names').addEventListener('click', e => {
   const b = e.target.closest('.namebtn'); if(!b) return;
   const n = b.dataset.n;
+  const enterNow = () => { me = n; ls('cria:me', n); renderMe(); };
+  if(pins[n]){ if(unlocked(n)) enterNow(); else askPin(n, enterNow); return; }   // já tem senha: vai direto
   modal(`${avatar(n, 84)}<h3>Você é a ${esc(n)}?</h3><p>Só toque em "Sou eu" se for você mesma!</p>
     <button class="btn" id="yesMe">Sou eu</button><button class="btn white" data-close>Não sou</button>`);
   $('#yesMe').onclick = () => {
