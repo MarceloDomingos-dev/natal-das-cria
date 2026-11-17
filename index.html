@@ -399,7 +399,7 @@ function reveal(){
   modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
     <div class="wish"><b>O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
     <p style="margin-top:12px">Não conta pra ninguém!</p>
-    <button class="btn" id="closeReveal">Fechar</button>`);
+    <button class="btn${MENSAGENS[me] ? ' red' : ''}" id="closeReveal">${MENSAGENS[me] ? 'Fechar e ver a surpresa 🎁' : 'Fechar'}</button>`);
   $('#closeReveal').onclick = () => { closeModal(); if(MENSAGENS[me]) showLove(); };
 }
 function showLove(){
@@ -410,6 +410,7 @@ function showLove(){
 }
 $('#revealBtn').onclick = async () => {
   modal(`<div class="emoji">🎅</div><h3>Tem alguém olhando?</h3><p>Só aperte se você for a <b>${esc(me)}</b> e estiver sozinha!</p>
+    ${MENSAGENS[me] ? `<div class="wish" style="text-align:center;margin-top:16px;background:rgba(129,8,49,.08)"><div class="txt" style="color:var(--accent)">🎁 Tem uma surpresa pra você!</div><p style="margin:6px 0 0">Depois de ver quem você tirou, aperte em <b>Fechar</b>.</p></div>` : ''}
     <button class="btn red" id="goReveal">Mostrar</button><button class="btn white" data-close>Espera</button>`);
   $('#goReveal').onclick = async () => { try{ await load(); }catch(e){} reveal(); };
 };
