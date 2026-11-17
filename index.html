@@ -308,6 +308,10 @@ const FOTOS = {
 };
 // Mensagem especial que aparece depois que a pessoa vê quem tirou
 const MENSAGENS = { 'Sofia Miranda': 'Te amo, meu amor.' };
+// Como chamar a pessoa depois que ela entra
+const APELIDOS = { 'Sofia Miranda': 'amor' };
+const chamar = n => APELIDOS[n] || n;
+const Chamar = n => { const c = chamar(n); return c.charAt(0).toUpperCase() + c.slice(1); };
 const SEMENTE = 'natal-das-cria-bf3a5df74715';   // define o sorteio; trocar = sorteio diferente
 const BANCO = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1eb9e99d11705';
 /* ========================================================= */
@@ -423,7 +427,7 @@ $('#refresh').onclick = async e => {
 /* ---------- pessoa ---------- */
 function renderMe(){
   const drawn = allDone();
-  $('#hello').innerHTML = `<span style="display:inline-flex;align-items:center;gap:12px">${avatar(me, 40)}Oi, ${esc(me)}!</span>`;
+  $('#hello').innerHTML = `<span style="display:inline-flex;align-items:center;gap:12px">${avatar(me, 40)}Oi, ${esc(chamar(me))}!</span>`;
   $('#resCard').classList.toggle('hide', !drawn);
   $('#waitTxt').textContent = missing().length ? 'Ainda falta: ' + missing().join(', ') : '';
   $('#wText').value = wishes[me] || '';
@@ -467,7 +471,7 @@ $('#wSave').onclick = async () => {
 function reveal(){
   const t = pairs()[me];
   setTimeout(confetti, 150);
-  modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
+  modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(Chamar(me))}, você tirou:</p><div class="big">${esc(t)}</div>
     <div class="wish"><b>O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
     <p style="margin-top:12px">Não conta pra ninguém!</p>
     <button class="btn${MENSAGENS[me] ? ' red' : ''}" id="closeReveal">${MENSAGENS[me] ? 'Ver surpresa' : 'Fechar'}</button>`);
@@ -502,7 +506,7 @@ function showLove(){
   el.onclick = () => el.classList.remove('on');
 }
 $('#revealBtn').onclick = async () => {
-  modal(`<h3>Tem alguém olhando?</h3><p>Só aperte se você for a <b>${esc(me)}</b> e estiver sozinha!</p>
+  modal(`<h3>Tem alguém olhando?</h3><p>${APELIDOS[me] ? `Só aperte se estiver sozinha, <b>${esc(chamar(me))}</b>!` : `Só aperte se você for a <b>${esc(me)}</b> e estiver sozinha!`}</p>
     ${MENSAGENS[me] ? `<div class="wish" style="text-align:center;margin-top:16px;background:rgba(129,8,49,.08)"><div class="txt" style="color:var(--accent)">🎁 Tem uma surpresa pra você!</div><p style="margin:6px 0 0">Depois de ver quem você tirou, ela vai aparecer.</p></div>` : ''}
     <button class="btn red" id="goReveal">Mostrar</button><button class="btn white" data-close>Espera</button>`);
   $('#goReveal').onclick = async () => { try{ await load(); }catch(e){} reveal(); };
