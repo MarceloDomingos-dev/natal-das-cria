@@ -183,6 +183,19 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 .love small{margin-top:28px;font-size:14px;opacity:.75;animation:fadein 1s both 2s}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 @keyframes rise{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+/* Botões coloridos no padrão Apple: cor sólida, sem brilho nem degradê */
+.btn.red,.btn.wa,.btn.white{backdrop-filter:none;-webkit-backdrop-filter:none;border:0;filter:none;
+  font-weight:500;letter-spacing:-.022em;box-shadow:none;transition:background .2s ease,transform .15s ease}
+.btn.red::after,.btn.wa::after,.btn.white::after,.btn.red::before,.btn.wa::before,.btn.white::before{display:none}
+.btn.red{background:#810831;color:#fff}
+.btn.red:hover{background:#940a39}
+.btn.red:active{background:#6e0629;transform:scale(.98);box-shadow:none}
+.btn.wa{background:#1fa855;color:#fff}
+.btn.wa:hover{background:#22b45b}
+.btn.white{background:#e8e8ed;color:var(--ink)}
+.btn.white:hover{background:#dedee3}
+.btn.white:active{background:#d2d2d7;transform:scale(.98);box-shadow:none}
+.reveal-btn{font-size:17px;padding:17px 24px}
 </style>
 </head>
 <body>
@@ -213,7 +226,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
     <div class="card hide" id="resCard" style="text-align:center">
       <h2 style="margin-bottom:4px">Saiu o sorteio! 🎁</h2>
       
-      <button class="btn red reveal-btn" id="revealBtn">VER QUEM EU TIREI 🎁</button>
+      <button class="btn red reveal-btn" id="revealBtn">Ver quem eu tirei</button>
     </div>
 
     <div class="card">
@@ -408,7 +421,7 @@ $('#wSave').onclick = async () => {
     if(!wasDrawn && allDone()){
       modal(`<div class="emoji">🎄</div><h3>Você foi a última!</h3><p>O sorteio <b>acabou de sair</b>. Avise as meninas no grupo:</p>
         <a class="btn wa" style="padding:16px;font-size:1.15rem" target="_blank" rel="noopener" href="${wa('🎄 NATAL DAS CRIA 🎄\n\nSAIU O SORTEIO DO AMIGO ESMALTE! 🎁\n\nEntra no site, toca no seu nome e depois em "VER QUEM EU TIREI" 🎁\n' + SITE)}">Avisar no grupo</a>
-        <button class="btn red" id="seeNow">Ver quem eu tirei 🎁</button>`);
+        <button class="btn red" id="seeNow">Ver quem eu tirei</button>`);
       $('#seeNow').onclick = reveal;
     } else if(!wasDrawn){
       modal(`<div class="emoji">🎄</div><h3>Salvo!</h3><p>Agora é esperar as outras. O sorteio sai sozinho quando todas salvarem.</p>${missing().length ? `<p>Falta: <b>${esc(missing().join(', '))}</b></p>` : ''}<button class="btn" data-close>Ok</button>`);
@@ -423,7 +436,7 @@ function reveal(){
   modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
     <div class="wish"><b>O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
     <p style="margin-top:12px">Não conta pra ninguém!</p>
-    <button class="btn${MENSAGENS[me] ? ' red' : ''}" id="closeReveal">${MENSAGENS[me] ? 'Ver surpresa 🎁' : 'Fechar'}</button>`);
+    <button class="btn${MENSAGENS[me] ? ' red' : ''}" id="closeReveal">${MENSAGENS[me] ? 'Ver surpresa' : 'Fechar'}</button>`);
   $('#closeReveal').onclick = () => { closeModal(); if(MENSAGENS[me]) showLove(); };
 }
 function showLove(){
