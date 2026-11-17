@@ -269,7 +269,7 @@ async function api(method, body){
   let r;
   try{ r = await fetch(BANCO, { method, cache:'no-store', headers: body ? {'Content-Type':'application/json'} : {}, body: body ? JSON.stringify(body) : undefined }); }
   catch(e){ throw new Error('Sem internet ou o servidor não respondeu. Tenta de novo daqui a pouco.'); }
-  if(r.status === 429) throw new Error('O site atingiu o limite de acessos de hoje. Tenta de novo mais tarde.');
+  if(r.status === 429 || r.status === 405) throw new Error('O site atingiu o limite de acessos de hoje. Tenta de novo mais tarde.');
   if(!r.ok) throw new Error('Deu um erro no servidor (' + r.status + '). Tenta de novo.');
   return r.json();
 }
