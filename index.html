@@ -208,6 +208,25 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 .btn.white::after{background:radial-gradient(120% 90% at 50% -30%,rgba(255,255,255,.8),rgba(255,255,255,0) 60%)}
 .btn.red:active,.btn.wa:active,.btn.white:active{transform:scale(.97)}
 .reveal-btn{font-size:17px;padding:17px 24px}
+/* Padrão profissional (estilo iOS): cor sólida e viva, vidro só como um contorno de luz fino. Sem degradê e sem faixa de brilho. */
+.btn::before,.btn::after,.btn.red::after,.btn.wa::after,.btn.white::after,
+.btn:not(.red):not(.wa):not(.white)::after,.btn:not(.red):not(.wa):not(.white)::before{display:none!important}
+.btn,.btn.red,.btn.wa,.btn.white{border:0;filter:none;font-weight:600;transition:background .2s ease,transform .15s ease}
+.btn.red{color:#fff;background:#b01245;backdrop-filter:none;-webkit-backdrop-filter:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 1px 0 rgba(255,255,255,.28),0 4px 14px rgba(176,18,69,.28)}
+.btn.red:hover{background:#c0174f}
+.btn.wa{color:#fff;background:#1e9e55;backdrop-filter:none;-webkit-backdrop-filter:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 1px 0 rgba(255,255,255,.28),0 4px 14px rgba(30,158,85,.25)}
+.btn.wa:hover{background:#22ad5d}
+.btn.white{color:var(--ink);background:rgba(232,232,237,.85);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),inset 0 1px 0 rgba(255,255,255,.9),0 2px 8px rgba(0,0,0,.05)}
+.btn.white:hover{background:rgba(222,222,228,.9)}
+.btn:not(.red):not(.wa):not(.white){color:var(--ink);background:rgba(255,255,255,.62);
+  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1px 0 #fff,0 0 0 .5px rgba(0,0,0,.12),0 4px 14px rgba(0,0,0,.08)}
+.btn:not(.red):not(.wa):not(.white):hover{background:rgba(255,255,255,.8)}
+.btn:active,.btn.red:active,.btn.wa:active,.btn.white:active{transform:scale(.97)}
+.glassbar::after{display:none}
 </style>
 </head>
 <body>
