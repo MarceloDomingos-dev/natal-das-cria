@@ -324,7 +324,8 @@ const APELIDOS = { 'Sofia Miranda': 'amor' };
 const chamar = n => APELIDOS[n] || n;
 const Chamar = n => { const c = chamar(n); return c.charAt(0).toUpperCase() + c.slice(1); };
 const SEMENTE = 'natal-das-cria-bf3a5df74715';   // define o sorteio; trocar = sorteio diferente
-const BANCO = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1eb9e99d11705';
+// Endereço do Realtime Database do Firebase (aba Dados). Não precisa de chave: a segurança fica nas Regras.
+const BANCO = 'https://natal-das-cria-default-rtdb.firebaseio.com';
 /* ========================================================= */
 
 const SITE = location.origin + location.pathname;
@@ -348,21 +349,25 @@ function closeModal(){ $('#ov').classList.remove('on'); $('#modal').innerHTML = 
 $('#ov').addEventListener('click', e => { if(e.target.id === 'ov' || e.target.hasAttribute('data-close')) closeModal(); });
 
 /* ---------- banco ---------- */
-async function api(method, body){
+class Negado extends Error{}
+async function api(method, path, body){
+  const url = BANCO.replace(/\/+$/, '') + '/natal' + path + '.json';
   let r;
-  try{ r = await fetch(BANCO, { method, cache:'no-store', headers: body ? {'Content-Type':'application/json'} : {}, body: body ? JSON.stringify(body) : undefined }); }
+  try{ r = await fetch(url, { method, cache:'no-store', headers: body !== undefined ? {'Content-Type':'application/json'} : {}, body: body !== undefined ? JSON.stringify(body) : undefined }); }
   catch(e){ throw new Error('Sem internet ou o servidor não respondeu. Tenta de novo daqui a pouco.'); }
-  if(r.status === 429 || r.status === 405) throw new Error('O site atingiu o limite de acessos de hoje. Tenta de novo mais tarde.');
+  if(r.status === 401 || r.status === 403) throw new Negado('Não foi permitido salvar.');
   if(!r.ok) throw new Error('Deu um erro no servidor (' + r.status + '). Tenta de novo.');
   return r.json();
 }
-let lastLoad = 0;
-async function load(){ const o = await api('GET'); lastLoad = Date.now(); wishes = (o.data && o.data.wishes) || {}; pins = (o.data && o.data.pins) || {}; }
+const caminho = n => '/' + encodeURIComponent(n);
+async function load(){ const o = await api('GET', '') || {}; wishes = o.wishes || {}; pins = o.pins || {}; }   // 1 acesso
 async function saveWish(name, text, pinHash){
-  if(Date.now() - lastLoad > 120000) await load();   // só relê se os dados estiverem velhos (economiza acesso)
+  if(pinHash && !pins[name]){
+    try{ await api('PUT', '/pins' + caminho(name), pinHash); pins[name] = pinHash; }   // só na primeira vez
+    catch(e){ if(e instanceof Negado){ await load(); return; } throw e; }               // alguém já criou senha pra esse nome
+  }
+  await api('PUT', '/wishes' + caminho(name), text);                                  // 1 acesso
   wishes[name] = text;
-  if(pinHash && !pins[name]) pins[name] = pinHash;
-  await api('PUT', { name:'natal-das-cria', data:{ wishes, pins } });
 }
 /* ---------- senha ---------- */
 async function hashPin(name, pin){
