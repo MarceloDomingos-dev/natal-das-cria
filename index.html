@@ -2,7 +2,11 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Natal das Cria — Amigo Esmalte</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +18,7 @@
   --accent:#810831; --blue:#810831; --blue-h:#940a39; --green:#1d8a3a; --soft:#e8e8ed;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-font-smoothing:antialiased}
+html{-webkit-font-smoothing:antialiased;background:var(--bg);min-height:100%;overscroll-behavior-y:none}
 body{margin:0;background:var(--bg);color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:17px;line-height:1.47;letter-spacing:-.022em;min-height:100vh}
@@ -227,6 +231,13 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 .btn:not(.red):not(.wa):not(.white):hover{background:rgba(255,255,255,.8)}
 .btn:active,.btn.red:active,.btn.wa:active,.btn.white:active{transform:scale(.97)}
 .glassbar::after{display:none}
+/* Tela infinita: fundo cobre a tela toda (inclusive atrás da barra do celular e ao puxar a página) */
+body{min-height:100vh;min-height:100dvh;position:relative;isolation:isolate}
+body::before{position:fixed;inset:0;z-index:-1;height:100lvh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background-repeat:no-repeat}
+.wrap{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));
+  padding-bottom:max(80px,calc(env(safe-area-inset-bottom) + 40px))}
+.overlay,.love{padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
