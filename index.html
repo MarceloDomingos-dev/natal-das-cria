@@ -238,6 +238,10 @@ body::before{position:fixed;inset:0;z-index:-1;height:100lvh;
 .wrap{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));
   padding-bottom:max(80px,calc(env(safe-area-inset-bottom) + 40px))}
 .overlay,.love{padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))}
+/* Surpresa: cor sólida (o Safari do iPhone usa a cor sólida para pintar atrás das barras de cima e de baixo) */
+.love{background-color:#8e2a4c;background-image:radial-gradient(70% 55% at 50% 45%,#b4506f 0%,rgba(142,42,76,0) 100%);
+  backdrop-filter:none;-webkit-backdrop-filter:none}
+#testeBar,#testeBar button{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -528,7 +532,7 @@ function showLove(){
   el.classList.add('on');
   // pinta também atrás das barras do celular, pra não ficar faixa cinza
   const meta = document.querySelector('meta[name="theme-color"]');
-  document.documentElement.style.background = '#a96f87'; document.body.style.background = '#a96f87'; if(meta) meta.content = '#a96f87';
+  document.documentElement.style.background = '#8e2a4c'; document.body.style.background = '#8e2a4c'; if(meta) meta.content = '#8e2a4c';
   el.onclick = () => { el.classList.remove('on'); document.documentElement.style.background = ''; document.body.style.background = ''; if(meta) meta.content = '#f5f5f7'; };
 }
 $('#revealBtn').onclick = async () => {
