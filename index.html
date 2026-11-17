@@ -142,6 +142,19 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 .namebtn:hover{background:rgba(232,232,237,.7)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .glassbar{background:rgba(255,255,255,.95)} .btn.white{background:var(--soft)} }
+
+.av{display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:50%;overflow:hidden;background:var(--soft);box-shadow:0 0 0 2px #fff,0 2px 8px rgba(0,0,0,.12)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.av.emo{font-size:60%;background:var(--bg)}
+.namebtn .av{font-size:24px}
+.love{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;flex-direction:column;padding:30px;text-align:center;
+  background:rgba(129,8,49,.55);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);color:#fff;cursor:pointer}
+.love.on{display:flex;animation:fadein 1s ease}
+.love .msg{font-size:46px;line-height:1.1;font-weight:700;letter-spacing:-.02em;animation:rise 1.4s cubic-bezier(.2,.9,.3,1) both .3s;text-shadow:0 4px 30px rgba(0,0,0,.25)}
+.love .av{margin-bottom:22px;animation:rise 1.2s cubic-bezier(.2,.9,.3,1) both;font-size:60px}
+.love small{margin-top:28px;font-size:14px;opacity:.75;animation:fadein 1s both 2s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -149,7 +162,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 <header class="glassbar"><b>🎄 Natal das Cria</b><button class="gbtn" onclick="location.reload()">Atualizar</button></header>
 <div class="wrap">
   <div class="logo">
-    <div class="top">Amigo esmalte 💅</div>
+    <div class="top">Amigo esmalte</div>
     <h1>Natal das Cria.</h1>
   </div>
 
@@ -157,7 +170,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 
   <!-- INÍCIO: escolher o nome -->
   <section id="home" class="hide">
-    <div class="banner hide" id="drawnBanner"><big>Saiu o sorteio! 🎉</big></div>
+    <div class="banner hide" id="drawnBanner"><big>Saiu o sorteio! 🎁</big></div>
     <div class="card">
       <h2 style="margin-bottom:16px">Quem é você?</h2><button class="hide" id="refresh"></button>
       <p class="explain hide" id="homeTxt">Toque no seu nome.</p>
@@ -174,35 +187,35 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
     </div>
 
     <div class="card hide" id="resCard" style="text-align:center">
-      <h2 style="margin-bottom:4px">Saiu o sorteio! 🎉</h2>
+      <h2 style="margin-bottom:4px">Saiu o sorteio! 🎁</h2>
       
-      <button class="btn red reveal-btn" id="revealBtn">🎁 VER QUEM EU TIREI</button>
+      <button class="btn red reveal-btn" id="revealBtn">VER QUEM EU TIREI 🎁</button>
     </div>
 
     <div class="card">
-      <h2 id="wishTitle" style="margin-bottom:14px">Qual esmalte você quer? 💅</h2>
+      <h2 id="wishTitle" style="margin-bottom:14px">Qual esmalte você quer?</h2>
       <p class="explain hide" id="wishHint">Escreva o nome da cor e aperte <b>Salvar</b>.</p>
       <textarea id="wText" placeholder="Ex.: vermelho, nude, Risqué Granulado Rosé..."></textarea>
       <div id="pinBox" class="hide">
-        <label for="pinNew" style="display:block;font-weight:600;margin:18px 0 6px">Crie uma senha de 4 números 🔒</label>
+        <label for="pinNew" style="display:block;font-weight:600;margin:18px 0 6px">Crie uma senha de 4 números</label>
         <input id="pinNew" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="new-password" style="letter-spacing:.4em;font-size:22px;text-align:center">
         
       </div>
-      <button class="btn" id="wSave">Salvar ✅</button>
+      <button class="btn" id="wSave">Salvar</button>
       <div class="warn" id="ww"></div>
     </div>
 
     <div class="card hide" id="waitCard">
-      <h2 style="font-size:1.2rem">Falta quem? ⏳</h2>
+      <h2 style="font-size:1.2rem">Falta quem?</h2>
       <p class="explain" id="waitTxt"></p>
       <p class="explain">O sorteio sai <b>sozinho</b> quando todas salvarem. Depois é só voltar aqui.</p>
     </div>
-    <button class="link" id="back">⬅ Voltar</button>
+    <button class="link" id="back">Voltar</button>
   </section>
 
   <section id="error" class="hide">
     <div class="card" style="text-align:center">
-      <div style="font-size:3rem">😕</div>
+      <div style="font-size:3rem">❄️</div>
       <h2>Ops!</h2>
       <p class="explain" id="errTxt"></p>
       <button class="btn" onclick="location.reload()">Tentar de novo</button>
@@ -211,20 +224,33 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 </div>
 
 <div class="overlay" id="ov"><div class="modal" id="modal"></div></div>
+<div class="love" id="love"></div>
 
 <script>
 /* =========================================================
    CONFIGURAÇÃO — mude aqui se precisar
    ========================================================= */
-const PARTICIPANTES = ['Sofia Esteves', 'Sofia Miranda', 'Ana', 'Gabi'];
+const PARTICIPANTES = ['Sofia Miranda', 'Sofia Esteves', 'Ana', 'Gabi'];
+// Fotos: coloque os arquivos na pasta fotos/ do repositório. Se a foto não existir, aparece um emoji de Natal.
+const FOTOS = {
+  'Sofia Miranda': 'fotos/sofia-miranda.jpg',
+  'Sofia Esteves': 'fotos/sofia-esteves.jpg',
+  'Ana': 'fotos/ana.jpg',
+  'Gabi': 'fotos/gabi.jpg'
+};
+// Mensagem especial que aparece depois que a pessoa vê quem tirou
+const MENSAGENS = { 'Sofia Miranda': 'Te amo, meu amor.' };
 const SEMENTE = 'natal-das-cria-bf3a5df74715';   // define o sorteio; trocar = sorteio diferente
 const BANCO = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1eb9e99d11705';
 /* ========================================================= */
 
 const SITE = location.origin + location.pathname;
 const $ = s => document.querySelector(s);
-const ICONS = ['🎅','⛄','🦌','🎄','⭐','🍪','🔔','🧦','🎁','❄️','🕯️','🍭'];
+const ICONS = ['🎄','🎅','⛄','🎁','⭐','🔔','❄️','🦌'];
 const icon = n => ICONS[PARTICIPANTES.indexOf(n) % ICONS.length];
+const avatar = (n, size) => FOTOS[n]
+  ? `<span class="av" style="width:${size}px;height:${size}px"><img src="${FOTOS[n]}" alt="" onerror="this.parentNode.textContent='${icon(n)}';this.parentNode.classList.add('emo')"></span>`
+  : `<span class="av emo" style="width:${size}px;height:${size}px">${icon(n)}</span>`;
 let wishes = {}, pins = {}, me = null;
 
 /* ---------- util ---------- */
@@ -243,7 +269,7 @@ async function api(method, body){
   let r;
   try{ r = await fetch(BANCO, { method, cache:'no-store', headers: body ? {'Content-Type':'application/json'} : {}, body: body ? JSON.stringify(body) : undefined }); }
   catch(e){ throw new Error('Sem internet ou o servidor não respondeu. Tenta de novo daqui a pouco.'); }
-  if(r.status === 429) throw new Error('O site atingiu o limite de acessos de hoje 😅 Tenta de novo mais tarde.');
+  if(r.status === 429) throw new Error('O site atingiu o limite de acessos de hoje. Tenta de novo mais tarde.');
   if(!r.ok) throw new Error('Deu um erro no servidor (' + r.status + '). Tenta de novo.');
   return r.json();
 }
@@ -261,7 +287,7 @@ async function hashPin(name, pin){
 }
 const unlocked = n => !pins[n] || ls('cria:pin:' + n) === pins[n];
 function askPin(n, then){
-  modal(`<div class="emoji">🔒</div><h3>Senha da ${esc(n)}</h3><p>Digite a senha de 4 números que você criou.</p>
+  modal(`<div class="emoji">🔔</div><h3>Senha da ${esc(n)}</h3><p>Digite a senha de 4 números que você criou.</p>
     <input id="pinIn" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="current-password" style="letter-spacing:.4em;font-size:24px;text-align:center;margin-top:12px">
     <div class="warn" id="wpin"></div>
     <button class="btn" id="pinOk">Entrar</button>
@@ -270,12 +296,12 @@ function askPin(n, then){
     const v = $('#pinIn').value.trim();
     if(!/^[0-9]{4}$/.test(v)){ warn($('#wpin'), 'A senha tem 4 números.'); return; }
     const h = await hashPin(n, v);
-    if(h !== pins[n]){ warn($('#wpin'), 'Senha errada 😕 Tenta de novo.'); $('#pinIn').value = ''; $('#pinIn').focus(); return; }
+    if(h !== pins[n]){ warn($('#wpin'), 'Senha errada. Tenta de novo.'); $('#pinIn').value = ''; $('#pinIn').focus(); return; }
     ls('cria:pin:' + n, h); closeModal(); then();
   };
   $('#pinOk').onclick = go;
   $('#pinIn').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); go(); } });
-  $('#pinForgot').onclick = () => modal(`<div class="emoji">🤷‍♀️</div><h3>Esqueceu?</h3><p>Fala com o Marcelo que ele apaga sua senha e você cria outra.</p><button class="btn" data-close>Ok</button>`);
+  $('#pinForgot').onclick = () => modal(`<div class="emoji">❄️</div><h3>Esqueceu?</h3><p>Fala com o Marcelo que ele apaga sua senha e você cria outra.</p><button class="btn" data-close>Ok</button>`);
   setTimeout(() => $('#pinIn') && $('#pinIn').focus(), 200);
 }
 
@@ -301,18 +327,18 @@ function renderHome(){
   $('#homeTxt').textContent = drawn ? 'Toque no seu nome pra ver o resultado.' : 'Toque no seu nome pra escrever o esmalte que você quer.';
   $('#names').innerHTML = PARTICIPANTES.map(n => `
     <button class="namebtn ${done(n) ? 'ok' : ''}" data-n="${esc(n)}">
-      <span class="ico">${icon(n)}</span>${esc(n)}
-      <span class="st">${done(n) ? 'Pronto ✓' : 'Falta'}</span>
+      ${avatar(n, 44)}${esc(n)}
+      <span class="st">${done(n) ? 'Pronto' : 'Falta'}</span>
     </button>`).join('');
   $('#prog').style.width = (d / PARTICIPANTES.length * 100) + '%';
-  $('#progTxt').textContent = drawn ? 'Todas escolheram! 🎉' : `${d} de ${PARTICIPANTES.length} já escolheram`;
+  $('#progTxt').textContent = drawn ? 'Todas escolheram!' : `${d} de ${PARTICIPANTES.length} já escolheram`;
   show('home');
 }
 $('#names').addEventListener('click', e => {
   const b = e.target.closest('.namebtn'); if(!b) return;
   const n = b.dataset.n;
-  modal(`<div class="emoji">${icon(n)}</div><h3>Você é a ${esc(n)}?</h3><p>Só toque em "Sou eu" se for você mesma!</p>
-    <button class="btn" id="yesMe">Sou eu ✅</button><button class="btn white" data-close>Não sou</button>`);
+  modal(`${avatar(n, 84)}<h3>Você é a ${esc(n)}?</h3><p>Só toque em "Sou eu" se for você mesma!</p>
+    <button class="btn" id="yesMe">Sou eu</button><button class="btn white" data-close>Não sou</button>`);
   $('#yesMe').onclick = () => {
     const enter = () => { me = n; ls('cria:me', n); renderMe(); };
     if(unlocked(n)){ closeModal(); enter(); } else askPin(n, enter);
@@ -327,24 +353,24 @@ $('#refresh').onclick = async e => {
 /* ---------- pessoa ---------- */
 function renderMe(){
   const drawn = allDone();
-  $('#hello').textContent = `Oi, ${me}! ${icon(me)}`;
+  $('#hello').innerHTML = `<span style="display:inline-flex;align-items:center;gap:12px">${avatar(me, 40)}Oi, ${esc(me)}!</span>`;
   $('#resCard').classList.toggle('hide', !drawn);
   $('#waitTxt').textContent = missing().length ? 'Ainda falta: ' + missing().join(', ') : '';
   $('#wText').value = wishes[me] || '';
-  $('#wishTitle').textContent = done(me) ? 'Seu esmalte ✓' : 'Qual esmalte você quer? 💅';
+  $('#wishTitle').textContent = done(me) ? 'Seu esmalte' : 'Qual esmalte você quer?';
   $('#wishHint').innerHTML = done(me) ? 'Tudo salvo! Se quiser mudar, escreva e salve de novo.' : 'Escreva o nome da cor e aperte <b>Salvar</b>.';
-  $('#wSave').textContent = done(me) ? 'Salvar mudança ✅' : 'Salvar ✅';
+  $('#wSave').textContent = done(me) ? 'Salvar mudança' : 'Salvar';
   $('#pinBox').classList.toggle('hide', !!pins[me]);
   $('#pinNew').value = '';
   show('me');
 }
 $('#wSave').onclick = async () => {
   const t = $('#wText').value.trim();
-  if(!t){ warn($('#ww'), 'Escreva o nome da cor primeiro 💅'); $('#wText').focus(); return; }
+  if(!t){ warn($('#ww'), 'Escreva o nome da cor primeiro.'); $('#wText').focus(); return; }
   let pinHash = null;
   if(!pins[me]){
     const p = $('#pinNew').value.trim();
-    if(!/^[0-9]{4}$/.test(p)){ warn($('#ww'), 'Crie uma senha com 4 números 🔒'); $('#pinNew').focus(); return; }
+    if(!/^[0-9]{4}$/.test(p)){ warn($('#ww'), 'Crie uma senha com 4 números.'); $('#pinNew').focus(); return; }
     pinHash = await hashPin(me, p);
   }
   warn($('#ww'), ''); busy($('#wSave'), true, 'Salvando...');
@@ -352,32 +378,39 @@ $('#wSave').onclick = async () => {
   try{
     await saveWish(me, t, pinHash);
     if(pins[me] && pinHash && pins[me] !== pinHash){ renderMe(); busy($('#wSave'), false); me = null; ls('cria:me', null); renderHome();
-      modal(`<div class="emoji">🔒</div><h3>Alguém já criou senha pra esse nome</h3><p>Toque no seu nome de novo e use a senha.</p><button class="btn" data-close>Ok</button>`); return; }
+      modal(`<div class="emoji">🔔</div><h3>Alguém já criou senha pra esse nome</h3><p>Toque no seu nome de novo e use a senha.</p><button class="btn" data-close>Ok</button>`); return; }
     if(pins[me]) ls('cria:pin:' + me, pins[me]);
     renderMe();
     if(!wasDrawn && allDone()){
-      modal(`<div class="emoji">🎉</div><h3>Você foi a última!</h3><p>O sorteio <b>acabou de sair</b>. Avise as meninas no grupo:</p>
-        <a class="btn wa" style="padding:16px;font-size:1.15rem" target="_blank" rel="noopener" href="${wa('🎄💅 NATAL DAS CRIA 💅🎄\n\nSAIU O SORTEIO DO AMIGO ESMALTE! 🎉\n\nEntra no site, toca no seu nome e depois em "VER QUEM EU TIREI" 🎁\n' + SITE)}">Avisar no grupo 💬</a>
+      modal(`<div class="emoji">🎄</div><h3>Você foi a última!</h3><p>O sorteio <b>acabou de sair</b>. Avise as meninas no grupo:</p>
+        <a class="btn wa" style="padding:16px;font-size:1.15rem" target="_blank" rel="noopener" href="${wa('🎄 NATAL DAS CRIA 🎄\n\nSAIU O SORTEIO DO AMIGO ESMALTE! 🎁\n\nEntra no site, toca no seu nome e depois em "VER QUEM EU TIREI" 🎁\n' + SITE)}">Avisar no grupo</a>
         <button class="btn red" id="seeNow">Ver quem eu tirei 🎁</button>`);
       $('#seeNow').onclick = reveal;
     } else if(!wasDrawn){
-      modal(`<div class="emoji">💅</div><h3>Salvo!</h3><p>Agora é esperar as outras. O sorteio sai sozinho quando todas salvarem.</p>${missing().length ? `<p>Falta: <b>${esc(missing().join(', '))}</b></p>` : ''}<button class="btn" data-close>Oba!</button>`);
+      modal(`<div class="emoji">🎄</div><h3>Salvo!</h3><p>Agora é esperar as outras. O sorteio sai sozinho quando todas salvarem.</p>${missing().length ? `<p>Falta: <b>${esc(missing().join(', '))}</b></p>` : ''}<button class="btn" data-close>Ok</button>`);
     } else {
-      modal(`<div class="emoji">💅</div><h3>Salvo!</h3><p>Quem te tirou já vai ver a mudança.</p><button class="btn" data-close>Ok</button>`);
+      modal(`<div class="emoji">🎄</div><h3>Salvo!</h3><p>Quem te tirou já vai ver a mudança.</p><button class="btn" data-close>Ok</button>`);
     }
   }catch(e){ warn($('#ww'), e.message); }
   busy($('#wSave'), false);
 };
 function reveal(){
   const t = pairs()[me];
-  modal(`<div class="emoji">🎁</div><p>${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
-    <div class="wish"><b>💅 O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
-    <p style="margin-top:12px">🤫 Não conta pra ninguém! Pode voltar aqui quando quiser.</p>
-    <button class="btn" data-close>Fechar</button>`);
+  modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
+    <div class="wish"><b>O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
+    <p style="margin-top:12px">Não conta pra ninguém!</p>
+    <button class="btn" id="closeReveal">Fechar</button>`);
+  $('#closeReveal').onclick = () => { closeModal(); if(MENSAGENS[me]) showLove(); };
+}
+function showLove(){
+  const el = $('#love');
+  el.innerHTML = `${avatar(me, 120)}<div class="msg">${esc(MENSAGENS[me])}</div>`;
+  el.classList.add('on');
+  el.onclick = () => el.classList.remove('on');
 }
 $('#revealBtn').onclick = async () => {
-  modal(`<div class="emoji">🤫</div><h3>Tem alguém olhando?</h3><p>Só aperte se você for a <b>${esc(me)}</b> e estiver sozinha!</p>
-    <button class="btn red" id="goReveal">Mostrar 👀</button><button class="btn white" data-close>Espera</button>`);
+  modal(`<div class="emoji">🎅</div><h3>Tem alguém olhando?</h3><p>Só aperte se você for a <b>${esc(me)}</b> e estiver sozinha!</p>
+    <button class="btn red" id="goReveal">Mostrar</button><button class="btn white" data-close>Espera</button>`);
   $('#goReveal').onclick = async () => { try{ await load(); }catch(e){} reveal(); };
 };
 $('#notMe').onclick = () => { if(me) ls('cria:pin:' + me, null); me = null; ls('cria:me', null); renderHome(); };
