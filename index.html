@@ -127,8 +127,26 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
   backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);
   border:1px solid rgba(255,255,255,.35);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.12)}
-.btn{background:linear-gradient(180deg,rgba(40,140,240,.92),rgba(0,103,210,.88))}
-.btn:hover{background:linear-gradient(180deg,rgba(55,150,245,.95),rgba(0,113,227,.92))}
+.btn{color:var(--ink);font-weight:600;
+  background:
+    radial-gradient(120% 140% at 15% 0%,rgba(255,255,255,.95),rgba(255,255,255,0) 55%),
+    radial-gradient(90% 120% at 100% 100%,rgba(129,8,49,.07),rgba(129,8,49,0) 60%),
+    linear-gradient(180deg,rgba(255,255,255,.55),rgba(235,235,242,.35));
+  backdrop-filter:blur(20px) saturate(200%) brightness(1.05);-webkit-backdrop-filter:blur(20px) saturate(200%) brightness(1.05);
+  border:1px solid rgba(255,255,255,.85);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,1),
+    inset 0 -1px 1px rgba(0,0,0,.06),
+    inset 1px 0 0 rgba(255,255,255,.6),
+    inset -1px 0 0 rgba(255,255,255,.4),
+    0 1px 2px rgba(0,0,0,.06),
+    0 8px 24px rgba(0,0,0,.10),
+    0 0 0 .5px rgba(0,0,0,.06)}
+.btn:hover{background:
+    radial-gradient(120% 140% at 15% 0%,rgba(255,255,255,1),rgba(255,255,255,0) 55%),
+    radial-gradient(90% 120% at 100% 100%,rgba(129,8,49,.09),rgba(129,8,49,0) 60%),
+    linear-gradient(180deg,rgba(255,255,255,.7),rgba(235,235,242,.45))}
+.btn:not(.red):not(.wa):not(.white)::after{background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0));height:50%}
 .btn.red{background:linear-gradient(180deg,rgba(160,20,70,.92),rgba(120,6,45,.9))}
 .btn.red:hover{background:linear-gradient(180deg,rgba(175,30,80,.95),rgba(129,8,49,.92))}
 .btn.wa{background:linear-gradient(180deg,rgba(45,190,105,.92),rgba(25,160,80,.9))}
