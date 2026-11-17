@@ -151,20 +151,19 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
   <div class="logo">
     <div class="top">Amigo esmalte 💅</div>
     <h1>Natal das Cria.</h1>
-    <p>Escolha sua cor. O sorteio sai sozinho. 🎄</p>
   </div>
 
   <div class="loading" id="loading"><div class="spin">🎁</div><br>Carregando...</div>
 
   <!-- INÍCIO: escolher o nome -->
   <section id="home" class="hide">
-    <div class="banner hide" id="drawnBanner"><big>SAIU O SORTEIO! 🎉</big>Toque no seu nome pra ver quem você tirou</div>
+    <div class="banner hide" id="drawnBanner"><big>Saiu o sorteio! 🎉</big></div>
     <div class="card">
-      <h2>Quem é você?</h2><button class="hide" id="refresh"></button>
-      <p class="explain" id="homeTxt">Toque no seu nome.</p>
+      <h2 style="margin-bottom:16px">Quem é você?</h2><button class="hide" id="refresh"></button>
+      <p class="explain hide" id="homeTxt">Toque no seu nome.</p>
       <div class="namebtns" id="names"></div>
       <div class="bar" style="margin-top:16px"><div id="prog"></div></div>
-      <p class="explain" id="progTxt" style="margin:6px 0 0"></p>
+      <p class="explain hide" id="progTxt" style="margin:6px 0 0"></p>
     </div>
   </section>
 
@@ -175,25 +174,25 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
     </div>
 
     <div class="card hide" id="resCard" style="text-align:center">
-      <h2>Saiu o sorteio! 🎉</h2>
-      <p class="explain">Veja sozinha. Ninguém pode olhar!</p>
+      <h2 style="margin-bottom:4px">Saiu o sorteio! 🎉</h2>
+      
       <button class="btn red reveal-btn" id="revealBtn">🎁 VER QUEM EU TIREI</button>
     </div>
 
     <div class="card">
-      <h2 id="wishTitle">Qual esmalte você quer? 💅</h2>
-      <p class="explain" id="wishHint">Escreva o nome da cor e aperte <b>Salvar</b>.</p>
+      <h2 id="wishTitle" style="margin-bottom:14px">Qual esmalte você quer? 💅</h2>
+      <p class="explain hide" id="wishHint">Escreva o nome da cor e aperte <b>Salvar</b>.</p>
       <textarea id="wText" placeholder="Ex.: vermelho, nude, Risqué Granulado Rosé..."></textarea>
       <div id="pinBox" class="hide">
         <label for="pinNew" style="display:block;font-weight:600;margin:18px 0 6px">Crie uma senha de 4 números 🔒</label>
         <input id="pinNew" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="new-password" style="letter-spacing:.4em;font-size:22px;text-align:center">
-        <p class="explain" style="font-size:14px;margin:8px 0 0">Pra não esquecer, use o <b>dia e mês do seu aniversário</b> (ex.: 25 de março = 2503). Não use a senha do celular.</p>
+        
       </div>
       <button class="btn" id="wSave">Salvar ✅</button>
       <div class="warn" id="ww"></div>
     </div>
 
-    <div class="card" id="waitCard">
+    <div class="card hide" id="waitCard">
       <h2 style="font-size:1.2rem">Falta quem? ⏳</h2>
       <p class="explain" id="waitTxt"></p>
       <p class="explain">O sorteio sai <b>sozinho</b> quando todas salvarem. Depois é só voltar aqui.</p>
@@ -330,7 +329,6 @@ function renderMe(){
   const drawn = allDone();
   $('#hello').textContent = `Oi, ${me}! ${icon(me)}`;
   $('#resCard').classList.toggle('hide', !drawn);
-  $('#waitCard').classList.toggle('hide', drawn);
   $('#waitTxt').textContent = missing().length ? 'Ainda falta: ' + missing().join(', ') : '';
   $('#wText').value = wishes[me] || '';
   $('#wishTitle').textContent = done(me) ? 'Seu esmalte ✓' : 'Qual esmalte você quer? 💅';
