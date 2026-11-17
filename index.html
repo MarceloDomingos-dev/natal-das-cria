@@ -292,6 +292,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 
 <div class="overlay" id="ov"><div class="modal" id="modal"></div></div>
 <div class="love" id="love"></div>
+<canvas id="confetti" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:25"></canvas>
 
 <script>
 /* =========================================================
@@ -463,11 +464,34 @@ $('#wSave').onclick = async () => {
 };
 function reveal(){
   const t = pairs()[me];
+  setTimeout(confetti, 150);
   modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
     <div class="wish"><b>O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
     <p style="margin-top:12px">Não conta pra ninguém!</p>
     <button class="btn${MENSAGENS[me] ? ' red' : ''}" id="closeReveal">${MENSAGENS[me] ? 'Ver surpresa' : 'Fechar'}</button>`);
   $('#closeReveal').onclick = () => { closeModal(); if(MENSAGENS[me]) showLove(); };
+}
+/* ---------- confete na revelação ---------- */
+function confetti(){
+  const c = $('#confetti'), x = c.getContext('2d'), dpr = window.devicePixelRatio || 1;
+  const W = innerWidth, H = innerHeight; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr,0,0,dpr,0,0);
+  const cores = ['#b01245','#d6336c','#1e9e55','#34c26f','#e6b422','#ffffff'];
+  const ps = [];
+  const burst = (ox, dir) => { for(let i = 0; i < 90; i++){
+    const a = (dir === 0 ? -Math.PI/2 : dir < 0 ? -Math.PI/3 : -2*Math.PI/3) + (Math.random()-.5) * 1.1, v = 9 + Math.random() * 9;
+    ps.push({ x:ox, y:H*0.62, vx:Math.cos(a)*v, vy:Math.sin(a)*v, w:6+Math.random()*6, h:8+Math.random()*10,
+      r:Math.random()*6.3, vr:(Math.random()-.5)*.35, c:cores[Math.random()*cores.length|0], t:0, circle:Math.random()<.25 }); } };
+  burst(W*0.1, -1); burst(W*0.9, 1); setTimeout(() => burst(W*0.5, 0), 180);
+  const t0 = performance.now();
+  (function tick(now){
+    x.clearRect(0,0,W,H);
+    for(const p of ps){ p.vy += .32; p.vx *= .985; p.vy *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.t++;
+      const life = Math.max(0, 1 - (now - t0) / 3800); x.globalAlpha = life;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c;
+      if(p.circle){ x.beginPath(); x.arc(0,0,p.w/2,0,6.3); x.fill(); } else { x.scale(1, Math.cos(p.t*.12)); x.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+      x.restore(); }
+    if(now - t0 < 3800) requestAnimationFrame(tick); else x.clearRect(0,0,W,H);
+  })(t0);
 }
 function showLove(){
   const el = $('#love');
