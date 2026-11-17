@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natal das Cria — Amigo Esmalte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e8102e;--green:#0e9f4f;--gold:#ffc83d;--pink:#ff2e93;--ink:#2a0a14;--card:#fff;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);min-height:100vh;overflow-x:hidden;
+  background:linear-gradient(160deg,#b0001e 0%,#e8102e 45%,#ff2e93 100%) fixed}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:18px 16px 70px}
+.logo{text-align:center;color:#fff;margin:6px 0 18px}
+.logo .top{font-size:2.6rem;line-height:1}
+.logo h1{font-family:Bungee,sans-serif;font-size:2.7rem;line-height:.95;margin:6px 0 4px;letter-spacing:1px;
+  text-shadow:0 4px 0 #7a0014,0 0 24px rgba(255,200,61,.6)}
+.logo h1 span{color:var(--gold)}
+.logo p{margin:0;font-weight:900;font-size:1.05rem;opacity:.95}
+.card{background:var(--card);border-radius:26px;padding:22px 18px;margin-bottom:14px;box-shadow:0 10px 0 rgba(0,0,0,.15)}
+.step{display:inline-block;background:var(--green);color:#fff;font-weight:900;border-radius:999px;padding:5px 14px;font-size:.9rem;margin-bottom:8px}
+h2{font-family:Bungee,sans-serif;font-weight:400;font-size:1.5rem;margin:0 0 6px;color:var(--red);line-height:1.1}
+.explain{font-size:1.05rem;font-weight:700;margin:0 0 14px;color:#5a3340}
+input,textarea{width:100%;font:inherit;font-size:1.15rem;font-weight:800;padding:15px 16px;border:3px solid #ffd0dc;border-radius:18px;background:#fff8fa;color:var(--ink)}
+input:focus,textarea:focus{outline:none;border-color:var(--pink)}
+textarea{resize:vertical;min-height:90px}
+label{display:block;font-weight:900;margin:14px 0 6px;font-size:1.05rem}
+.btn{display:flex;width:100%;align-items:center;justify-content:center;gap:10px;border:0;border-radius:22px;padding:18px;font:inherit;font-weight:900;font-size:1.25rem;cursor:pointer;background:var(--green);color:#fff;box-shadow:0 6px 0 #076b34;margin-top:14px;transition:transform .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #076b34}
+.btn.red{background:var(--red);box-shadow:0 6px 0 #8a0019}
+.btn.gold{background:var(--gold);color:var(--ink);box-shadow:0 6px 0 #c48f00}
+.btn.white{background:#fff;color:var(--red);box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.btn.wa{background:#1fa855;box-shadow:0 6px 0 #11733a;font-size:1rem;padding:12px;margin:0;border-radius:16px}
+.btn.mini{font-size:1rem;padding:12px;margin:0;border-radius:16px;box-shadow:0 4px 0 #c48f00}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.link{background:none;border:0;color:#fff;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;display:block;margin:16px auto 0;font-size:1rem}
+.addrow{display:flex;gap:8px}.addrow input{flex:1}
+.addrow .btn{width:auto;margin:0;padding:0 22px;font-size:1.8rem}
+.names{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.name{display:flex;align-items:center;gap:6px;background:#fff0f5;border:2px solid #ffc2d6;border-radius:999px;padding:8px 8px 8px 14px;font-weight:900;font-size:1.05rem}
+.name button{border:0;background:var(--red);color:#fff;border-radius:50%;width:26px;height:26px;font-weight:900;cursor:pointer;font-size:.95rem;line-height:1}
+.count{font-weight:900;color:var(--green);margin-top:10px}
+.people{display:grid;gap:10px}
+.pbtn{display:flex;align-items:center;gap:12px;width:100%;border:3px solid #ffd0dc;background:#fff;border-radius:20px;padding:14px 16px;font:inherit;font-size:1.2rem;font-weight:900;color:var(--ink);cursor:pointer;text-align:left}
+.pbtn .ico{font-size:1.6rem}
+.pbtn .st{margin-left:auto;font-size:.85rem;font-weight:900;padding:5px 10px;border-radius:999px;background:#ffe2ea;color:var(--red);white-space:nowrap}
+.pbtn.done{border-color:#9ee6bd;background:#f0fff6}
+.pbtn.done .st{background:var(--green);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:3px solid #ffd0dc;background:#fff;border-radius:999px;padding:10px 14px;font:inherit;font-weight:900;font-size:1rem;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:7px}
+.chip i{width:18px;height:18px;border-radius:50%;display:inline-block;border:2px solid rgba(0,0,0,.12)}
+.chip.on{border-color:var(--pink);background:#ffe6f2;box-shadow:inset 0 0 0 2px var(--pink)}
+.chip.on::after{content:"✓";color:var(--pink)}
+.bar{height:16px;background:#ffe2ea;border-radius:999px;overflow:hidden;margin:6px 0 4px}
+.bar div{height:100%;background:linear-gradient(90deg,var(--green),#35d27c);border-radius:999px;transition:width .3s}
+.overlay{position:fixed;inset:0;background:rgba(42,10,20,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:30px;max-width:420px;width:100%;padding:26px 20px;text-align:center;animation:pop .3s cubic-bezier(.2,1.4,.5,1);max-height:92vh;overflow:auto}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+.modal .emoji{font-size:3.4rem;line-height:1}
+.modal h3{font-family:Bungee,sans-serif;font-weight:400;color:var(--red);font-size:1.5rem;margin:8px 0;line-height:1.15}
+.modal p{font-weight:800;font-size:1.05rem;color:#5a3340;margin:6px 0}
+.big{font-family:Bungee,sans-serif;font-size:2.6rem;color:var(--pink);margin:4px 0 6px;line-height:1.05;overflow-wrap:anywhere}
+.wish{background:#fff4f8;border:3px dashed #ffb3cd;border-radius:20px;padding:14px;text-align:left;margin-top:12px}
+.wish b{display:block;color:var(--red);margin-bottom:6px;font-size:1.05rem}
+.wish .chips .chip{cursor:default;padding:7px 11px;font-size:.92rem}
+.wish .txt{font-weight:800;font-size:1.05rem;margin-top:8px;white-space:pre-wrap}
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+.tag{background:var(--gold);color:var(--ink);border-radius:999px;padding:7px 13px;font-weight:900;font-size:.95rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border:3px solid #ffd0dc;background:#fff;border-radius:22px;padding:16px 8px;font:inherit;font-weight:900;font-size:1.15rem;color:var(--ink);cursor:pointer}
+.tile .ico{font-size:2rem;display:block;margin-bottom:4px}
+.tile small{display:block;font-size:.8rem;color:var(--red);margin-top:4px}
+.tile.seen{background:#f0fff6;border-color:#9ee6bd}
+.tile.seen small{color:var(--green)}
+.coderow{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:2px dashed #ffe0ea}
+.coderow:last-child{border:0}
+.coderow b{flex:1;font-size:1.1rem}
+.warn{background:#fff4d1;border-radius:16px;padding:12px;font-weight:800;color:#7a5410;margin-top:10px;display:none}
+.warn.on{display:block}
+.hide{display:none!important}
+.shake{animation:shake .5s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.spin{font-size:4rem;animation:spin .5s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.list-row{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:2px dashed #ffe0ea;font-weight:800;font-size:1.05rem}
+</style>
+<style>
+.namebtns{display:grid;gap:12px}
+.namebtn{display:flex;align-items:center;gap:12px;width:100%;border:3px solid #ffd0dc;background:#fff;border-radius:22px;padding:18px 16px;font:inherit;font-size:1.3rem;font-weight:900;color:var(--ink);cursor:pointer;text-align:left;box-shadow:0 5px 0 #ffd0dc}
+.namebtn:active{transform:translateY(3px);box-shadow:0 2px 0 #ffd0dc}
+.namebtn .ico{font-size:1.8rem}
+.namebtn .st{margin-left:auto;font-size:.82rem;font-weight:900;padding:6px 11px;border-radius:999px;background:#ffe2ea;color:var(--red);white-space:nowrap}
+.namebtn.ok{border-color:#9ee6bd;box-shadow:0 5px 0 #9ee6bd}
+.namebtn.ok .st{background:var(--green);color:#fff}
+.banner{background:var(--gold);border-radius:22px;padding:16px;text-align:center;font-weight:900;font-size:1.15rem;margin-bottom:14px;box-shadow:0 8px 0 rgba(0,0,0,.15)}
+.banner big{display:block;font-family:Bungee,sans-serif;font-weight:400;font-size:1.6rem;color:var(--red);line-height:1.1;margin-bottom:4px}
+.small{font-size:.95rem;font-weight:800;color:var(--red);background:none;border:0;text-decoration:underline;cursor:pointer;font-family:inherit}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.loading{text-align:center;color:#fff;font-weight:900;font-size:1.2rem;padding:30px 0}
+.reveal-btn{font-size:1.45rem;padding:24px}
+.wish .txt{font-size:1.25rem}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="wrap">
+  <div class="logo">
+    <div class="top">🎄💅🎁</div>
+    <h1>NATAL<br>DAS <span>CRIA</span></h1>
+    <p>Amigo Esmalte ✨</p>
+  </div>
+
+  <div class="loading" id="loading"><div class="spin">🎁</div><br>Carregando...</div>
+
+  <!-- INÍCIO: escolher o nome -->
+  <section id="home" class="hide">
+    <div class="banner hide" id="drawnBanner"><big>SAIU O SORTEIO! 🎉</big>Toque no seu nome pra ver quem você tirou</div>
+    <div class="card">
+      <div class="row"><h2>Quem é você? 👇</h2><button class="small" id="refresh">🔄 Atualizar</button></div>
+      <p class="explain" id="homeTxt">Toque no seu nome.</p>
+      <div class="namebtns" id="names"></div>
+      <div class="bar" style="margin-top:16px"><div id="prog"></div></div>
+      <p class="explain" id="progTxt" style="margin:6px 0 0"></p>
+    </div>
+  </section>
+
+  <!-- PESSOA -->
+  <section id="me" class="hide">
+    <div class="card" style="padding:16px 18px">
+      <div class="row"><h2 id="hello" style="margin:0"></h2><button class="small" id="notMe">Não sou eu</button></div>
+    </div>
+
+    <div class="card hide" id="resCard" style="text-align:center">
+      <h2>Saiu o sorteio! 🎉</h2>
+      <p class="explain">Veja sozinha. Ninguém pode olhar!</p>
+      <button class="btn red reveal-btn" id="revealBtn">🎁 VER QUEM EU TIREI</button>
+    </div>
+
+    <div class="card">
+      <h2 id="wishTitle">Qual esmalte você quer? 💅</h2>
+      <p class="explain" id="wishHint">Escreva o nome da cor e aperte <b>Salvar</b>.</p>
+      <textarea id="wText" placeholder="Ex.: vermelho, nude, Risqué Granulado Rosé..."></textarea>
+      <button class="btn" id="wSave">Salvar ✅</button>
+      <div class="warn" id="ww"></div>
+    </div>
+
+    <div class="card" id="waitCard">
+      <h2 style="font-size:1.2rem">Falta quem? ⏳</h2>
+      <p class="explain" id="waitTxt"></p>
+      <p class="explain">O sorteio sai <b>sozinho</b> quando todas salvarem. Depois é só voltar aqui.</p>
+    </div>
+    <button class="link" id="back">⬅ Voltar</button>
+  </section>
+
+  <section id="error" class="hide">
+    <div class="card" style="text-align:center">
+      <div style="font-size:3rem">😕</div>
+      <h2>Ops!</h2>
+      <p class="explain" id="errTxt"></p>
+      <button class="btn" onclick="location.reload()">Tentar de novo</button>
+    </div>
+  </section>
+</div>
+
+<div class="overlay" id="ov"><div class="modal" id="modal"></div></div>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO — mude aqui se precisar
+   ========================================================= */
+const PARTICIPANTES = ['Sofia', 'Sofia (namorada)', 'Ana', 'Gabi'];
+const SEMENTE = 'natal-das-cria-2026-k7Qp';   // define o sorteio; trocar = sorteio diferente
+const BANCO = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1eb9e99d11705';
+/* ========================================================= */
+
+const SITE = location.origin + location.pathname;
+const $ = s => document.querySelector(s);
+const ICONS = ['🎅','⛄','🦌','🎄','⭐','🍪','🔔','🧦','🎁','❄️','🕯️','🍭'];
+const icon = n => ICONS[PARTICIPANTES.indexOf(n) % ICONS.length];
+let wishes = {}, me = null;
+
+/* ---------- util ---------- */
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k); if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){ return null; } }
+function warn(el, t){ el.textContent = t; el.classList.toggle('on', !!t); if(t){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); } }
+function show(id){ ['loading','home','me','error'].forEach(s => $('#'+s).classList.toggle('hide', s !== id)); window.scrollTo({top:0}); }
+function busy(btn, on, txt){ if(on){ btn.dataset.t = btn.innerHTML; btn.innerHTML = txt; btn.disabled = true; } else { btn.innerHTML = btn.dataset.t; btn.disabled = false; } }
+const wa = t => 'https://wa.me/?text=' + encodeURIComponent(t);
+function modal(html){ $('#modal').innerHTML = html; $('#ov').classList.add('on'); }
+function closeModal(){ $('#ov').classList.remove('on'); $('#modal').innerHTML = ''; }
+$('#ov').addEventListener('click', e => { if(e.target.id === 'ov' || e.target.hasAttribute('data-close')) closeModal(); });
+
+/* ---------- banco ---------- */
+async function api(method, body){
+  let r;
+  try{ r = await fetch(BANCO, { method, cache:'no-store', headers: body ? {'Content-Type':'application/json'} : {}, body: body ? JSON.stringify(body) : undefined }); }
+  catch(e){ throw new Error('Sem internet ou o servidor não respondeu. Tenta de novo daqui a pouco.'); }
+  if(r.status === 429) throw new Error('O site atingiu o limite de acessos de hoje 😅 Tenta de novo mais tarde.');
+  if(!r.ok) throw new Error('Deu um erro no servidor (' + r.status + '). Tenta de novo.');
+  return r.json();
+}
+async function load(){ const o = await api('GET'); wishes = (o.data && o.data.wishes) || {}; }
+async function saveWish(name, text){
+  await load();                       // pega o que as outras salvaram antes
+  wishes[name] = text;
+  await api('PUT', { name:'natal-das-cria', data:{ wishes } });
+}
+
+/* ---------- sorteio automático ----------
+   Sempre dá o mesmo resultado (vem da SEMENTE), então não precisa de ninguém pra sortear:
+   assim que todas salvam, cada celular calcula o mesmo sorteio. Ninguém tira a si mesma. */
+function prng(seed){ let h = 1779033703 ^ seed.length; for(const c of seed){ h = Math.imul(h ^ c.charCodeAt(0), 3432918353); h = h << 13 | h >>> 19; }
+  return () => { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; }; }
+function pairs(){
+  const r = prng(SEMENTE + '|' + PARTICIPANTES.join('|'));
+  const idx = PARTICIPANTES.map((_,i) => i);
+  for(let i = idx.length - 1; i > 0; i--){ const j = Math.floor(r() * i); [idx[i], idx[j]] = [idx[j], idx[i]]; }  // Sattolo
+  const out = {}; PARTICIPANTES.forEach((n,i) => out[n] = PARTICIPANTES[idx[i]]); return out;
+}
+const done = n => !!(wishes[n] && wishes[n].trim());
+const allDone = () => PARTICIPANTES.every(done);
+const missing = () => PARTICIPANTES.filter(n => !done(n));
+
+/* ---------- início ---------- */
+function renderHome(){
+  const drawn = allDone(), d = PARTICIPANTES.filter(done).length;
+  $('#drawnBanner').classList.toggle('hide', !drawn);
+  $('#homeTxt').textContent = drawn ? 'Toque no seu nome pra ver o resultado.' : 'Toque no seu nome pra escrever o esmalte que você quer.';
+  $('#names').innerHTML = PARTICIPANTES.map(n => `
+    <button class="namebtn ${done(n) ? 'ok' : ''}" data-n="${esc(n)}">
+      <span class="ico">${icon(n)}</span>${esc(n)}
+      <span class="st">${done(n) ? 'Pronto ✓' : 'Falta'}</span>
+    </button>`).join('');
+  $('#prog').style.width = (d / PARTICIPANTES.length * 100) + '%';
+  $('#progTxt').textContent = drawn ? 'Todas escolheram! 🎉' : `${d} de ${PARTICIPANTES.length} já escolheram`;
+  show('home');
+}
+$('#names').addEventListener('click', e => {
+  const b = e.target.closest('.namebtn'); if(!b) return;
+  const n = b.dataset.n;
+  modal(`<div class="emoji">${icon(n)}</div><h3>Você é a ${esc(n)}?</h3><p>Só toque em "Sou eu" se for você mesma!</p>
+    <button class="btn" id="yesMe">Sou eu ✅</button><button class="btn white" data-close>Não sou</button>`);
+  $('#yesMe').onclick = () => { closeModal(); me = n; ls('cria:me', n); renderMe(); };
+});
+$('#refresh').onclick = async e => {
+  busy(e.target, true, '...');
+  try{ await load(); renderHome(); }catch(err){ modal(`<h3>Ops</h3><p>${esc(err.message)}</p><button class="btn" data-close>Ok</button>`); }
+  busy(e.target, false);
+};
+
+/* ---------- pessoa ---------- */
+function renderMe(){
+  const drawn = allDone();
+  $('#hello').textContent = `Oi, ${me}! ${icon(me)}`;
+  $('#resCard').classList.toggle('hide', !drawn);
+  $('#waitCard').classList.toggle('hide', drawn);
+  $('#waitTxt').textContent = missing().length ? 'Ainda falta: ' + missing().join(', ') : '';
+  $('#wText').value = wishes[me] || '';
+  $('#wishTitle').textContent = done(me) ? 'Seu esmalte ✓' : 'Qual esmalte você quer? 💅';
+  $('#wishHint').innerHTML = done(me) ? 'Tudo salvo! Se quiser mudar, escreva e salve de novo.' : 'Escreva o nome da cor e aperte <b>Salvar</b>.';
+  $('#wSave').textContent = done(me) ? 'Salvar mudança ✅' : 'Salvar ✅';
+  show('me');
+}
+$('#wSave').onclick = async () => {
+  const t = $('#wText').value.trim();
+  if(!t){ warn($('#ww'), 'Escreva o nome da cor primeiro 💅'); $('#wText').focus(); return; }
+  warn($('#ww'), ''); busy($('#wSave'), true, 'Salvando...');
+  const wasDrawn = allDone();
+  try{
+    await saveWish(me, t);
+    renderMe();
+    if(!wasDrawn && allDone()){
+      modal(`<div class="emoji">🎉</div><h3>Você foi a última!</h3><p>O sorteio <b>acabou de sair</b>. Avise as meninas no grupo:</p>
+        <a class="btn wa" style="padding:16px;font-size:1.15rem" target="_blank" rel="noopener" href="${wa('🎄💅 NATAL DAS CRIA 💅🎄\n\nSAIU O SORTEIO DO AMIGO ESMALTE! 🎉\n\nEntra no site, toca no seu nome e depois em "VER QUEM EU TIREI" 🎁\n' + SITE)}">Avisar no grupo 💬</a>
+        <button class="btn red" id="seeNow">Ver quem eu tirei 🎁</button>`);
+      $('#seeNow').onclick = reveal;
+    } else if(!wasDrawn){
+      modal(`<div class="emoji">💅</div><h3>Salvo!</h3><p>Agora é esperar as outras. O sorteio sai sozinho quando todas salvarem.</p>${missing().length ? `<p>Falta: <b>${esc(missing().join(', '))}</b></p>` : ''}<button class="btn" data-close>Oba!</button>`);
+    } else {
+      modal(`<div class="emoji">💅</div><h3>Salvo!</h3><p>Quem te tirou já vai ver a mudança.</p><button class="btn" data-close>Ok</button>`);
+    }
+  }catch(e){ warn($('#ww'), e.message); }
+  busy($('#wSave'), false);
+};
+function reveal(){
+  const t = pairs()[me];
+  modal(`<div class="emoji">🎁</div><p>${esc(me)}, você tirou:</p><div class="big">${esc(t)}</div>
+    <div class="wish"><b>💅 O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
+    <p style="margin-top:12px">🤫 Não conta pra ninguém! Pode voltar aqui quando quiser.</p>
+    <button class="btn" data-close>Fechar</button>`);
+}
+$('#revealBtn').onclick = async () => {
+  modal(`<div class="emoji">🤫</div><h3>Tem alguém olhando?</h3><p>Só aperte se você for a <b>${esc(me)}</b> e estiver sozinha!</p>
+    <button class="btn red" id="goReveal">Mostrar 👀</button><button class="btn white" data-close>Espera</button>`);
+  $('#goReveal').onclick = async () => { try{ await load(); }catch(e){} reveal(); };
+};
+$('#notMe').onclick = () => { me = null; ls('cria:me', null); renderHome(); };
+$('#back').onclick = renderHome;
+
+/* ---------- neve ---------- */
+(function(){
+  const c = $('#snow'), x = c.getContext('2d'); let W, H, f = [];
+  const size = () => { W = c.width = innerWidth; H = c.height = innerHeight; };
+  size(); addEventListener('resize', size);
+  for(let i = 0; i < 70; i++) f.push({ x:Math.random()*W, y:Math.random()*H, r:1+Math.random()*3, s:.4+Math.random()*1.2, d:Math.random()*6 });
+  (function tick(){ x.clearRect(0,0,W,H); x.fillStyle = 'rgba(255,255,255,.85)';
+    for(const p of f){ p.y += p.s; p.d += .02; p.x += Math.sin(p.d)*.4; if(p.y > H){ p.y = -5; p.x = Math.random()*W; } x.beginPath(); x.arc(p.x,p.y,p.r,0,6.3); x.fill(); }
+    requestAnimationFrame(tick); })();
+})();
+
+/* ---------- começar ---------- */
+(async () => {
+  try{
+    await load();
+    const saved = ls('cria:me');
+    if(saved && PARTICIPANTES.includes(saved)){ me = saved; renderMe(); } else renderHome();
+  }catch(e){ $('#errTxt').textContent = e.message; show('error'); }
+})();
+</script>
+</body>
+</html>
