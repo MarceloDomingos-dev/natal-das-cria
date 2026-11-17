@@ -11,7 +11,7 @@
 /* Estilo inspirado na loja online (fundo cinza-claro, cartões brancos arredondados, tipografia do sistema) */
 :root{
   --bg:#f5f5f7; --card:#fff; --ink:#1d1d1f; --gray:#6e6e73; --line:#d2d2d7;
-  --accent:#810831; --blue:#0071e3; --blue-h:#0077ed; --green:#1d8a3a; --soft:#e8e8ed;
+  --accent:#810831; --blue:#810831; --blue-h:#940a39; --green:#1d8a3a; --soft:#e8e8ed;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-font-smoothing:antialiased}
@@ -40,7 +40,7 @@ h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,"Helvetic
 /* campos */
 textarea,input{width:100%;font:inherit;font-size:17px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);resize:vertical}
 textarea{min-height:110px}
-textarea:focus,input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,113,227,.18)}
+textarea:focus,input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(129,8,49,.15)}
 
 /* botões em pílula */
 .btn{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;border:0;border-radius:980px;padding:17px 24px;margin-top:16px;
@@ -106,7 +106,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 
 /* ===== Vidro (estilo "liquid glass") só nas barras e botões ===== */
 body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;
   background:radial-gradient(40% 35% at 15% 10%,rgba(129,8,49,.22),transparent 70%),
-             radial-gradient(35% 30% at 90% 25%,rgba(0,113,227,.16),transparent 70%),
+             radial-gradient(35% 30% at 90% 25%,rgba(29,138,58,.14),transparent 70%),
              radial-gradient(40% 35% at 70% 95%,rgba(29,138,58,.16),transparent 70%),
              radial-gradient(30% 30% at 5% 80%,rgba(255,159,67,.14),transparent 70%)}
 .glassbar{position:sticky;top:max(12px,env(safe-area-inset-top));z-index:15;display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -114,7 +114,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
   background:
     radial-gradient(140% 160% at 15% -20%,rgba(255,255,255,.95) 0%,rgba(255,255,255,.3) 40%,rgba(255,255,255,0) 62%),
     radial-gradient(70% 140% at 50% 140%,rgba(129,8,49,.14),rgba(129,8,49,0) 65%),
-    radial-gradient(50% 120% at 104% 50%,rgba(0,113,227,.10),rgba(0,113,227,0) 70%),
+    radial-gradient(50% 120% at 104% 50%,rgba(29,138,58,.10),rgba(29,138,58,0) 70%),
     linear-gradient(180deg,rgba(255,255,255,.4),rgba(215,215,226,.4));
   backdrop-filter:blur(26px) saturate(220%) brightness(1.08);-webkit-backdrop-filter:blur(26px) saturate(220%) brightness(1.08);
   border:1.5px solid rgba(255,255,255,.95);
@@ -136,7 +136,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
   background:
     radial-gradient(140% 120% at 20% -10%,rgba(255,255,255,1) 0%,rgba(255,255,255,.35) 38%,rgba(255,255,255,0) 60%),
     radial-gradient(80% 120% at 50% 120%,rgba(129,8,49,.16),rgba(129,8,49,0) 65%),
-    radial-gradient(60% 90% at 105% 50%,rgba(0,113,227,.10),rgba(0,113,227,0) 70%),
+    radial-gradient(60% 90% at 105% 50%,rgba(29,138,58,.10),rgba(29,138,58,0) 70%),
     linear-gradient(180deg,rgba(255,255,255,.35),rgba(210,210,222,.45));
   backdrop-filter:blur(24px) saturate(220%) brightness(1.08);-webkit-backdrop-filter:blur(24px) saturate(220%) brightness(1.08);
   border:1.5px solid rgba(255,255,255,.95);
@@ -252,7 +252,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 
   <section id="error" class="hide">
     <div class="card" style="text-align:center">
-      <div style="font-size:3rem">❄️</div>
+      <div style="font-size:3rem">🎄</div>
       <h2>Ops!</h2>
       <p class="explain" id="errTxt"></p>
       <button class="btn" onclick="location.reload()">Tentar de novo</button>
@@ -283,7 +283,7 @@ const BANCO = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1eb9e99d11
 
 const SITE = location.origin + location.pathname;
 const $ = s => document.querySelector(s);
-const ICONS = ['🎄','🎅','⛄','🎁','⭐','🔔','❄️','🦌'];
+const ICONS = ['🎄','🎅','🎁','⭐','🔔','🦌'];
 const icon = n => ICONS[PARTICIPANTES.indexOf(n) % ICONS.length];
 const avatar = (n, size) => FOTOS[n]
   ? `<span class="av" style="width:${size}px;height:${size}px"><img src="${FOTOS[n]}" alt="" onerror="this.parentNode.textContent='${icon(n)}';this.parentNode.classList.add('emo')"></span>`
@@ -294,7 +294,7 @@ let wishes = {}, pins = {}, me = null;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k); if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){ return null; } }
 function warn(el, t){ el.textContent = t; el.classList.toggle('on', !!t); if(t){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); } }
-function show(id){ ['loading','home','me','error'].forEach(s => $('#'+s).classList.toggle('hide', s !== id)); window.scrollTo({top:0}); }
+function show(id){ ['loading','home','me','error'].forEach(s => $('#'+s).classList.toggle('hide', s !== id)); $('.glassbar').classList.toggle('hide', id !== 'home'); window.scrollTo({top:0}); }
 function busy(btn, on, txt){ if(on){ btn.dataset.t = btn.innerHTML; btn.innerHTML = txt; btn.disabled = true; } else { btn.innerHTML = btn.dataset.t; btn.disabled = false; } }
 const wa = t => 'https://wa.me/?text=' + encodeURIComponent(t);
 function modal(html){ $('#modal').innerHTML = html; $('#ov').classList.add('on'); }
@@ -338,7 +338,7 @@ function askPin(n, then){
   };
   $('#pinOk').onclick = go;
   $('#pinIn').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); go(); } });
-  $('#pinForgot').onclick = () => modal(`<div class="emoji">❄️</div><h3>Esqueceu?</h3><p>Fala com o Marcelo que ele apaga sua senha e você cria outra.</p><button class="btn" data-close>Ok</button>`);
+  $('#pinForgot').onclick = () => modal(`<div class="emoji">🔔</div><h3>Esqueceu?</h3><p>Fala com o Marcelo que ele apaga sua senha e você cria outra.</p><button class="btn" data-close>Ok</button>`);
   setTimeout(() => $('#pinIn') && $('#pinIn').focus(), 200);
 }
 
