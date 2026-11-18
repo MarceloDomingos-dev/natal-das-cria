@@ -227,6 +227,10 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 .btn:not(.red):not(.wa):not(.white):hover{background:rgba(255,255,255,.8)}
 .btn:active,.btn.red:active,.btn.wa:active,.btn.white:active{transform:scale(.97)}
 .glassbar::after{display:none}
+/* Texto grande dos esmaltes: quebra linha, letra menor e rolagem se precisar */
+.wish .txt{overflow-wrap:anywhere;word-break:break-word}
+.wish .txt.longo{font-size:17px;font-weight:500;line-height:1.5;max-height:45vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:4px}
+#wText{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -490,7 +494,7 @@ function reveal(){
   const t = pairs()[me];
   setTimeout(confetti, 150);
   modal(`${avatar(t, 96)}<p style="margin-top:14px">${esc(Chamar(me))}, você tirou:</p><div class="big">${esc(t)}</div>
-    <div class="wish"><b>O esmalte que ela quer:</b><div class="txt">${esc(wishes[t] || '—')}</div></div>
+    <div class="wish"><b>O esmalte que ela quer:</b><div class="txt${(wishes[t] || '').length > 50 ? ' longo' : ''}">${esc(wishes[t] || '—')}</div></div>
     <p style="margin-top:12px">Não conta pra ninguém!</p>
     <button class="btn${MENSAGENS[me] ? ' red' : ''}" id="closeReveal">${MENSAGENS[me] ? 'Ver surpresa' : 'Fechar'}</button>`);
   $('#closeReveal').onclick = () => { closeModal(); if(MENSAGENS[me]) showLove(); };
