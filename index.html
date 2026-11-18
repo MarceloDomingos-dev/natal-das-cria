@@ -459,6 +459,7 @@ function renderMe(){
 $('#wSave').onclick = async () => {
   const t = $('#wText').value.trim();
   if(!t){ warn($('#ww'), 'Escreva o nome da cor primeiro.'); $('#wText').focus(); return; }
+  if(soMarca(t)){ warn($('#ww'), 'Só a marca não. Escreva a cor também.'); $('#wText').focus(); return; }
   let pinHash = null;
   if(!pins[me]){
     const p = $('#pinNew').value.trim();
@@ -553,6 +554,10 @@ if(TESTE){
     location.reload();
   };
 }
+
+/* ---------- não aceitar só o nome da marca ---------- */
+const MARCAS = ['risque','risqué','colorama','impala','dailus','vult','avon','boticario','boticário','o boticario','o boticário','ana hickmann','mohda','big universo','essie','opi','bella rosa','lirio','lírio','granado','natura','eudora','top beauty','maybelline','revlon','sally hansen','nati','jequiti','kiko','zoya','ludurana','hits','blant','beauty color','yenzah','cora','anita','tons de verão','tons de verao'];
+const soMarca = t => { const x = t.trim().toLowerCase().replace(/[.!,;]+$/,'').replace(/\s+/g,' '); return MARCAS.includes(x); };
 
 /* ---------- campo que cresce conforme escreve ---------- */
 function growText(){ const t = $('#wText'); t.style.height = '58px'; t.style.height = Math.max(58, t.scrollHeight) + 'px'; }
