@@ -329,7 +329,7 @@ const ICONS = ['🎄','🎅','🎁','⭐','🔔','🦌'];
 const icon = n => ICONS[PARTICIPANTES.indexOf(n) % ICONS.length];
 // A Sofia Miranda vê a foto do casal; as outras veem a foto dela sozinha
 const FOTO_PARA_ELA = { 'Sofia Miranda': 'fotos/sofia-miranda-2.jpg' };
-const FOTO_PARA_OUTRAS = { 'Sofia Miranda': 'fotos/sofia-miranda-solo.jpg' };
+const FOTO_PARA_OUTRAS = { 'Sofia Miranda': 'fotos/sofia-miranda-solo-2.jpg' };
 // Página inicial (ninguém entrou) e a própria Sofia: foto do casal. Outra menina logada: foto dela sozinha.
 const fotoDe = n => (me && me !== n && FOTO_PARA_OUTRAS[n]) || FOTO_PARA_ELA[n] || FOTOS[n];
 const avatar = (n, size) => fotoDe(n)
