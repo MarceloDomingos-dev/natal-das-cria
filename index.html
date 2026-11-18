@@ -39,7 +39,7 @@ h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,"Helvetic
 
 /* campos */
 textarea,input{width:100%;font:inherit;font-size:17px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);resize:vertical}
-textarea{min-height:110px}
+textarea{min-height:0;height:auto;resize:none;overflow:hidden;line-height:1.4}
 textarea:focus,input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(129,8,49,.15)}
 
 /* botões em pílula */
@@ -263,7 +263,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
     <div class="card">
       <h2 id="wishTitle" style="margin-bottom:14px">Qual esmalte você quer?</h2>
       <p class="explain hide" id="wishHint">Escreva o nome da cor e aperte <b>Salvar</b>.</p>
-      <textarea id="wText" placeholder="Ex.: vermelho, nude, Risqué Granulado Rosé..."></textarea>
+      <textarea id="wText" rows="1"></textarea>
       <div id="pinBox" class="hide">
         <label for="pinNew" style="display:block;font-weight:600;margin:18px 0 6px">Crie uma senha de 4 números</label>
         <input id="pinNew" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="new-password" style="letter-spacing:.4em;font-size:22px;text-align:center">
@@ -448,6 +448,7 @@ function renderMe(){
   $('#resCard').classList.toggle('hide', !drawn);
   $('#waitTxt').textContent = missing().length ? 'Ainda falta: ' + missing().join(', ') : '';
   $('#wText').value = wishes[me] || '';
+  growText();
   $('#wishTitle').textContent = done(me) ? 'Seu esmalte' : 'Qual esmalte você quer?';
   $('#wishHint').innerHTML = done(me) ? 'Tudo salvo! Se quiser mudar, escreva e salve de novo.' : 'Escreva o nome da cor e aperte <b>Salvar</b>.';
   $('#wSave').textContent = done(me) ? 'Salvar mudança' : 'Salvar';
@@ -552,6 +553,10 @@ if(TESTE){
     location.reload();
   };
 }
+
+/* ---------- campo que cresce conforme escreve ---------- */
+function growText(){ const t = $('#wText'); t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; }
+$('#wText').addEventListener('input', growText);
 
 /* ---------- começar ---------- */
 (async () => {
