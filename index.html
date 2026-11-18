@@ -327,8 +327,13 @@ const SITE = location.origin + location.pathname;
 const $ = s => document.querySelector(s);
 const ICONS = ['🎄','🎅','🎁','⭐','🔔','🦌'];
 const icon = n => ICONS[PARTICIPANTES.indexOf(n) % ICONS.length];
-const avatar = (n, size) => FOTOS[n]
-  ? `<span class="av" style="width:${size}px;height:${size}px"><img src="${FOTOS[n]}" alt="" onerror="this.parentNode.textContent='${icon(n)}';this.parentNode.classList.add('emo')"></span>`
+// A Sofia Miranda vê a foto do casal; as outras veem a foto dela sozinha
+const FOTO_PARA_ELA = { 'Sofia Miranda': 'fotos/sofia-miranda-2.jpg' };
+const FOTO_PARA_OUTRAS = { 'Sofia Miranda': 'fotos/sofia-miranda-solo.jpg' };
+// Página inicial (ninguém entrou) e a própria Sofia: foto do casal. Outra menina logada: foto dela sozinha.
+const fotoDe = n => (me && me !== n && FOTO_PARA_OUTRAS[n]) || FOTO_PARA_ELA[n] || FOTOS[n];
+const avatar = (n, size) => fotoDe(n)
+  ? `<span class="av" style="width:${size}px;height:${size}px"><img src="${fotoDe(n)}" alt="" onerror="this.parentNode.textContent='${icon(n)}';this.parentNode.classList.add('emo')"></span>`
   : `<span class="av emo" style="width:${size}px;height:${size}px">${icon(n)}</span>`;
 let wishes = {}, pins = {}, me = null;
 
