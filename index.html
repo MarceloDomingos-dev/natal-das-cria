@@ -231,7 +231,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
 </head>
 <body>
 <canvas id="snow"></canvas>
-<header class="glassbar"><b>🎄 Natal das Cria</b><button class="gbtn" onclick="location.reload()">Atualizar</button></header>
+<header class="glassbar"><span style="display:flex;flex-direction:column;line-height:1.1;position:relative;z-index:1"><b>🎄 Natal das Cria</b><small style="font-size:12px;font-weight:600;color:var(--gray);letter-spacing:.01em;margin-top:2px;padding-left:2px">Amigo esmalte</small></span><button class="gbtn" onclick="location.reload()">Atualizar</button></header>
 <div class="wrap">
 
   <div class="loading" id="loading"><div class="spin">🎁</div><br>Carregando...</div>
@@ -263,7 +263,7 @@ body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none
     <div class="card">
       <h2 id="wishTitle" style="margin-bottom:14px">Qual esmalte você quer?</h2>
       <p class="explain hide" id="wishHint">Escreva o nome da cor e aperte <b>Salvar</b>.</p>
-      <textarea id="wText" rows="1" placeholder="Ex.: vermelho ou Risqué"></textarea>
+      <textarea id="wText" rows="1" placeholder="Cor, ou marca e nome da cor"></textarea>
       <div id="pinBox" class="hide">
         <label for="pinNew" style="display:block;font-weight:600;margin:18px 0 6px">Crie uma senha de 4 números</label>
         <input id="pinNew" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="new-password" style="letter-spacing:.4em;font-size:22px;text-align:center">
